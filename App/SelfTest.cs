@@ -126,7 +126,8 @@ public static class SelfTest
             $"max|Δ| = {maxDiff:E2}");
     }
 
-    private static void TestParseval()    {
+    private static void TestParseval()
+    {
         var image = CreateRandomImage(64);
         var decomposition = HaarDecomposition.Build(image, 5);
         double coefficientEnergy = 0;
@@ -159,8 +160,23 @@ public static class SelfTest
             for (int x = 0; x < 8; x++)
                 diffCoefficients = Math.Max(diffCoefficients, Math.Abs(check.Coefficients[y, x] - check.ReferenceCoefficients[y, x]));
 
-        bool ok = diffPower < 0.01 && diffCoefficients < 1e-4;
-        Record("Проверка по Lb3_Haar.xlsx", ok, $"max|ΔP| = {diffPower:F5}, max|Δc| = {diffCoefficients:E2}");
+        // Эталонные отсчёты первого окна из Lb3_Haar.xlsx (строка 10 и соответствующие варианты).
+        double[,] expectedSamples =
+        {
+            { 0.00042429, 3.00036675, 1.00040511, 2.00038593, 7.00166718, 9.00162882, 4.00165759, 5.00163841 },
+            { -1.49997123, 1.49997123, -0.49999041, 0.49999041, 0.75001918, 2.74998082, -2.24999041, -1.25000959 },
+            { 1.50039552, 1.50039552, 1.00040511, 2.00038593, 5.25166718, 7.25162882, 5.75165759, 6.75163841 },
+            { 0.00042429, 3.00036675, 1.00040511, 2.00038593, 8.00164800, 8.00164800, 4.50164800, 4.50164800 }
+        };
+
+        double diffSamples = 0;
+        for (int c = 0; c < check.Cases.Count; c++)
+            for (int x = 0; x < 8; x++)
+                diffSamples = Math.Max(diffSamples, Math.Abs(check.Cases[c].Reconstructed[0, x] - expectedSamples[c, x]));
+
+        bool ok = diffPower < 1e-4 && diffCoefficients < 1e-4 && diffSamples < 1e-3;
+        Record("Проверка по Lb3_Haar.xlsx", ok,
+            $"max|ΔP| = {diffPower:E2}, max|Δc| = {diffCoefficients:E2}, max|Δsamples| = {diffSamples:E2}");
     }
 
     private static void TestMetrics()
