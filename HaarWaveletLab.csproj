@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <RootNamespace>HaarWaveletLab</RootNamespace>
+    <AssemblyName>HaarWaveletLab</AssemblyName>
+    <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
+    <ApplicationDefaultFont>Segoe UI, 9.5pt</ApplicationDefaultFont>
+    <InvariantGlobalization>false</InvariantGlobalization>
+    <Product>Вейвлет-преобразование Хаара — лаб. №3</Product>
+    <AssemblyTitle>Вейвлет-преобразование изображений (Хаар)</AssemblyTitle>
+    <Version>1.0.0</Version>
+  </PropertyGroup>
+
+</Project>
